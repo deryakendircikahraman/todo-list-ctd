@@ -1,22 +1,16 @@
 import "./App.css";
-
-const todos = [
-  { id: 1, title: "review resources" },
-  { id: 2, title: "take notes" },
-  { id: 3, title: "code out app" },
-];
+import TodoList from "./TodoList";
+import TodoForm from "./TodoForm";
 
 function App() {
   return (
-    <div className="todo-card">
-      <h1 className="title">Todo List</h1>
-      <ul className="todo-list">
-        {todos.map((todo) => (
-          <li key={todo.id} className="todo-item">
-            {todo.title}
-          </li>
-        ))}
-      </ul>
+    <div className="app">
+      <h1 className="app-title">My Todos</h1>
+
+      <div className="app-card">
+        <TodoForm />
+        <TodoList />
+      </div>
     </div>
   );
 }
