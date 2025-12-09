@@ -1,22 +1,20 @@
 import "./App.css";
-
-const todos = [
-  { id: 1, title: "review resources" },
-  { id: 2, title: "take notes" },
-  { id: 3, title: "code out app" },
-];
+import { useState } from "react";
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
 
 function App() {
+  const [newTodo, setNewTodo] = useState("new todo...");
+
   return (
     <div className="todo-card">
       <h1 className="title">Todo List</h1>
-      <ul className="todo-list">
-        {todos.map((todo) => (
-          <li key={todo.id} className="todo-item">
-            {todo.title}
-          </li>
-        ))}
-      </ul>
+
+      <TodoForm />
+
+      <p>{newTodo}</p>
+
+      <TodoList />
     </div>
   );
 }
