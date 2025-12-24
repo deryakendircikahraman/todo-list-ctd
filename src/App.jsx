@@ -4,24 +4,39 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 
 function App() {
-  const [newTodo, setNewTodo] = useState("new todo..."); // state
+  const [todoList, setTodoList] = useState([
+    { id: 1, title: "review resources", isCompleted: false },
+    { id: 2, title: "take notes", isCompleted: false },
+    { id: 3, title: "code out app", isCompleted: false },
+  ]);
 
-  const todos = [
-    { id: 1, title: "review resources" },
-    { id: 2, title: "take notes" },
-    { id: 3, title: "code out app" },
-  ];
+  function addTodo(title) {
+    const cleanedTitle = title.trim();
+    if (!cleanedTitle) return;
+
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title: cleanedTitle,
+      isCompleted: false,
+    };
+
+    setTodoList([...todoList, newTodo]);
+  }
+
+  function completeTodo(id) {
+    const updatedTodos = todoList.map((todo) => {
+      if (todo.id === id) return { ...todo, isCompleted: true };
+      return todo;
+    });
+    setTodoList(updatedTodos);
+  }
 
   return (
     <div className="todo-card">
       <h1 className="title">Todo List</h1>
 
-      <TodoForm />
-
-      {/* Part 2: state değeri burada gösteriliyor */}
-      <p className="preview">{newTodo}</p>
-
-      <TodoList todos={todos} />
+      <TodoForm onAddTodo={addTodo} />
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} />
     </div>
   );
 }
