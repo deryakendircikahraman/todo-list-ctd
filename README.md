@@ -1,7 +1,6 @@
 # Todo List App
 
-This project was created for **Week 1 of the Code the Dream (CTD)** program.  
-It is a simple React + Vite application that displays a title and an unordered list of todos.
+This project was created for **Code the Dream (CTD)** program.  
 
 ## Installation
 
