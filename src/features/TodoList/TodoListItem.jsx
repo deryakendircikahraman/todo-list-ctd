@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
+
+  useEffect(() => {
+    setWorkingTitle(todo.title);
+  }, [todo]);
 
   function handleCancel() {
     setWorkingTitle(todo.title);
@@ -45,7 +49,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 type="checkbox"
                 id={`checkbox${todo.id}`}
                 checked={todo.isCompleted}
-                onChange={() => onCompleteTodo(todo.id)}
+                onChange={() => onCompleteTodo(todo)}
               />
             </label>
             <span onClick={() => setIsEditing(true)}>{todo.title}</span>
