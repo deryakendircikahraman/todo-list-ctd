@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import TodoForm from "./features/TodoForm";
 import TodoList from "./features/TodoList/TodoList";
+import TodosViewForm from "./features/TodosViewForm";
 import {
   airtableAuthHeader,
   airtableRequest,
@@ -10,11 +11,23 @@ import {
   todoToFields,
 } from "./utils/airtable";
 
+const encodeUrl = ({ sortField, sortDirection, queryString }) => {
+  let sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
+  let searchQuery = "";
+  if (queryString) {
+    searchQuery = `&filterByFormula=SEARCH("${queryString}",+title)`;
+  }
+  return encodeURI(`${airtableUrl}?${sortQuery}${searchQuery}`);
+};
+
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [sortField, setSortField] = useState("createdTime");
+  const [sortDirection, setSortDirection] = useState("desc");
+  const [queryString, setQueryString] = useState("");
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -29,7 +42,7 @@ function App() {
       };
 
       try {
-        const resp = await airtableRequest(airtableUrl, options);
+        const resp = await airtableRequest(encodeUrl({ sortField, sortDirection, queryString }), options);
         const { records } = await resp.json();
         const fetchedTodos = records.map((record) => recordToTodo(record));
         setTodoList(fetchedTodos);
@@ -41,7 +54,7 @@ function App() {
     };
 
     fetchTodos();
-  }, []);
+  }, [sortField, sortDirection, queryString]);
 
   async function addTodo(title) {
     const cleanedTitle = title.trim();
@@ -71,7 +84,7 @@ function App() {
 
     try {
       setIsSaving(true);
-      const resp = await airtableRequest(airtableUrl, options);
+      const resp = await airtableRequest(encodeUrl({ sortField, sortDirection, queryString }), options);
       const { records } = await resp.json();
 
       const savedTodo = {
@@ -118,7 +131,7 @@ function App() {
 
     try {
       setIsSaving(true);
-      await airtableRequest(airtableUrl, options);
+      await airtableRequest(encodeUrl({ sortField, sortDirection, queryString }), options);
     } catch (error) {
       console.error(error);
       setErrorMessage(`${error.message}. Reverting todo...`);
@@ -159,7 +172,7 @@ function App() {
     };
 
     try {
-      await airtableRequest(airtableUrl, options);
+      await airtableRequest(encodeUrl({ sortField, sortDirection, queryString }), options);
     } catch (error) {
       console.error(error);
       setErrorMessage(`${error.message}. Reverting todo...`);
@@ -181,6 +194,16 @@ function App() {
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
         isLoading={isLoading}
+      />
+
+      <hr />
+      <TodosViewForm
+        sortField={sortField}
+        setSortField={setSortField}
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+        queryString={queryString}
+        setQueryString={setQueryString}
       />
 
       {errorMessage ? (
