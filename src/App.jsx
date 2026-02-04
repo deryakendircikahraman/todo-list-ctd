@@ -10,6 +10,7 @@ import {
   recordToTodo,
   todoToFields,
 } from "./utils/airtable";
+import styles from "./App.module.css";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -187,8 +188,8 @@ function App() {
   }
 
   return (
-    <div className="todo-card">
-      <h1 className="title">Todo List</h1>
+    <div className={styles.todoCard}>
+      <h1 className={styles.title}>Todo List</h1>
 
       <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
       <TodoList
@@ -209,7 +210,7 @@ function App() {
       />
 
       {errorMessage ? (
-        <div>
+        <div className={styles.errorContainer}>
           <hr />
           <p>{errorMessage}</p>
           <button type="button" onClick={() => setErrorMessage("")}>

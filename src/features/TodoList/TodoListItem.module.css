@@ -1,0 +1,27 @@
+.todoItem {
+  padding: 0.8rem 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.9rem;
+  background: rgba(15, 118, 110, 0.2);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.todoItem:hover {
+  background: rgba(45, 212, 191, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.todoItem label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.todoItem input[type="checkbox"] {
+  margin: 0;
+}

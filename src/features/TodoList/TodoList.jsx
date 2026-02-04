@@ -1,10 +1,11 @@
 import TodoListItem from "./TodoListItem";
+import styles from "./TodoList.module.css";
 
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
   const filteredTodoList = todoList.filter((todo) => !todo.isCompleted);
 
   return (
-    <ul className="todo-list">
+    <ul className={styles.todoList}>
       {isLoading ? (
         <p>Todo list loading...</p>
       ) : filteredTodoList.length === 0 ? (
