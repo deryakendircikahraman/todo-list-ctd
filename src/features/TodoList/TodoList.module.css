@@ -7,3 +7,38 @@
   gap: 1rem;
   width: 100%;
 }
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.paginationControls button {
+  background: rgba(56, 189, 248, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #e0f2fe;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.paginationControls button:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
+}
+
+.paginationControls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.paginationControls span {
+  color: #96c6f5;
+  font-size: 0.95rem;
+}
